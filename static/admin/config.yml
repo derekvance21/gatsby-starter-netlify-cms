@@ -1,3 +1,5 @@
+# the below option goes here and not in backend
+# publish_mode: editorial_workflow ==> allows saving and editing of drafts - works like branch, commit to branch, respectively
 backend:
   name: git-gateway
   branch: master
