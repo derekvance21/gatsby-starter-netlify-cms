@@ -13,6 +13,16 @@ backend:
 media_folder: static/img
 public_folder: /img
 
+media_library:
+  name: cloudinary
+  config:
+    cloud_name: dkemko1lp
+    api_key: 221453993611229
+    multiple: true
+    # not sure how the below works yet but they're related to making the cloudinary widget more seamless
+    # inline-container: "body"
+    # remove_header: true
+
 collections:
   - name: "blog"
     label: "Blog"
@@ -66,3 +76,19 @@ collections:
           - {label: Testimonials, name: testimonials, widget: list, fields: [{label: Quote, name: quote, widget: string}, {label: Author, name: author, widget: string}]}
           - {label: Full_image, name: full_image, widget: image}
           - {label: Pricing, name: pricing, widget: object, fields: [{label: Heading, name: heading, widget: string}, {label: Description, name: description, widget: string}, {label: Plans, name: plans, widget: list, fields: [{label: Plan, name: plan, widget: string}, {label: Price, name: price, widget: string}, {label: Description, name: description, widget: string}, {label: Items, name: items, widget: list}]}]}
+  - name: "album"
+    label: "Album"
+    folder: "src/pages/album"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Template Key", name: "templateKey", widget: "hidden", default: "album-post"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Featured Image", name: "featuredimage", widget: "image"}
+      - {label: "Location", name: "location", widget: "map"}
+      - label: "Photos"
+        name: "photos"
+        widget: image
+      - {label: "Tags", name: "tags", widget: "list"}
