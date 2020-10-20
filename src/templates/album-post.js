@@ -11,8 +11,7 @@ const AlbumImages = ({photos}) => {
         className="album-image margin-top-0"
         style={{
           backgroundImage: `url(${url})`,
-          // backgroundPosition: `top left`,
-          // backgroundAttachment: `fixed`,
+          // backgroundAttachment: `fixed`, // this would make a 'parallax' effect where the image doesn't scroll w the page
         }}
       ></div>
     ))
