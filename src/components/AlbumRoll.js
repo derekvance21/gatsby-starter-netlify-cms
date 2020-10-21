@@ -20,6 +20,7 @@ export default function AlbumRoll() {
               templateKey
               date(formatString: "MMMM DD, YYYY")
               featuredimage
+              description
             }
           }
         }

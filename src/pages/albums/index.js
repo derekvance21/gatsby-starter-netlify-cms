@@ -20,7 +20,7 @@ export default function Albums () {
             padding: '1rem',
           }}
         >
-          Latest Stories
+          Latest Albums
         </h1>
       </div>
       <section className="section">

@@ -68,7 +68,8 @@ module.exports = {
         apiKey: process.env.CLOUDINARY_API_KEY,
         apiSecret: process.env.CLOUDINARY_API_SECRET,
         resourceType: `image`,
-        prefix: `samples/` // folder in which files reside in cloudinary media library
+        // this is where queries to CloudinaryMedia will go
+        prefix: `room/` // folder in which files reside in cloudinary media library
       }
     },
     {
