@@ -1,10 +1,13 @@
 require('dotenv').config();
 
+const cloudinary_folder = `room/`
+
 module.exports = {
   siteMetadata: {
     title: 'Gatsby + Netlify CMS Starter',
     description:
       'This repo contains an example business website that is built with Gatsby, and Netlify CMS.It follows the JAMstack architecture by using Git as a single source of truth, and Netlify for continuous deployment, and CDN distribution.',
+    cloudinary_folder: cloudinary_folder,
   },
   plugins: [
     'gatsby-plugin-react-helmet',
@@ -68,8 +71,9 @@ module.exports = {
         apiKey: process.env.CLOUDINARY_API_KEY,
         apiSecret: process.env.CLOUDINARY_API_SECRET,
         resourceType: `image`,
-        // this is where queries to CloudinaryMedia will go
-        prefix: `room/` // folder in which files reside in cloudinary media library
+        prefix: cloudinary_folder, // folder in which queries to allcloudinarymedia reside
+        maxResults: 1000,
+        context: true, // not sure what this does yet
       }
     },
     {

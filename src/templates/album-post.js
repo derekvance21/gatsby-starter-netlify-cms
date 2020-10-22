@@ -6,13 +6,16 @@ import { graphql, Link } from 'gatsby'
 import Layout from '../components/Layout'
 
 const AlbumImages = ({photos}) => {
+  console.log(photos);
+
   return (
-    photos.map((url) => (
+    photos.map((photo) => (
       <div
         className="album-image margin-top-0"
         style={{
-          backgroundImage: `url(${url})`,
-          // backgroundAttachment: `fixed`, // this would make a 'parallax' effect where the image doesn't scroll w the page
+          backgroundImage: `url(${photo.node.secure_url})`,
+          width: '100%',
+          paddingTop: `${100 * photo.node.height / photo.node.width}%` // container-width * height / width
         }}
       ></div>
     ))
@@ -37,9 +40,13 @@ export const AlbumPostTemplate = ({
               {title}
             </h1>
             <p>{description}</p>
-            <AlbumImages
-              photos={photos}
-            />
+            {photos ? 
+              <AlbumImages
+                photos={photos}
+              />
+              :
+              null
+            }
             {tags && tags.length ? (
               <div style={{ marginTop: `4rem` }}>
                 <h4>Tags</h4>
@@ -67,7 +74,13 @@ AlbumPostTemplate.propTypes = {
 }
 
 const AlbumPost = ({ data }) => {
-  const { markdownRemark: album } = data
+  const { 
+    markdownRemark: album, 
+    allCloudinaryMedia: {
+      edges: photos
+    } 
+  } = data
+
 
   return (
     <Layout>
@@ -84,7 +97,7 @@ const AlbumPost = ({ data }) => {
         }
         // tags={album.frontmatter.tags}
         title={album.frontmatter.title}
-        photos={album.frontmatter.photos}
+        photos={photos}
       />
     </Layout>
   )
@@ -93,13 +106,14 @@ const AlbumPost = ({ data }) => {
 AlbumPost.propTypes = {
   data: PropTypes.shape({
     markdownRemark: PropTypes.object,
+    allCloudinaryMedia: PropTypes.object,
   }),
 }
 
 export default AlbumPost
 
 export const pageQuery = graphql`
-  query AlbumPostByID($id: String!) {
+  query AlbumPostByID($id: String!, $photos_publicid: [String]) {
     markdownRemark(id: { eq: $id }) {
       id
       frontmatter {
@@ -108,6 +122,15 @@ export const pageQuery = graphql`
         description
         tags
         photos
+      }
+    }
+    allCloudinaryMedia(filter: {public_id: { in: $photos_publicid }}) {
+      edges {
+        node {
+          height
+          width
+          secure_url
+        }
       }
     }
   }

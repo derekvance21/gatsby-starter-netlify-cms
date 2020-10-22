@@ -2,14 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { AlbumPostTemplate } from '../../templates/album-post'
 
-const AlbumPostPreview = ({ entry, widgetFor }) => {
-  const tags = entry.getIn(['data', 'tags'])
+// how to create custom previews
+// https://www.netlifycms.org/docs/customization/
+
+const AlbumPostPreview = ({ entry }) => {
+
+  const data = entry.getIn(['data']).toJS();
+  const {description, tags, title, photos} = data;
+  
   return (
     <AlbumPostTemplate
-      description={entry.getIn(['data', 'description'])}
-      tags={tags && tags.toJS()}
-      title={entry.getIn(['data', 'title'])}
-      photos={entry.getIn(['data', 'photos'])}
+      description={description}
+      tags={tags}
+      title={title}
+      photos={photos}
     />
   )
 }

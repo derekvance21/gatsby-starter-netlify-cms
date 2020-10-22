@@ -15,14 +15,23 @@ public_folder: /img
 
 media_library:
   name: cloudinary
+  output_filename_only: true
   config:
     cloud_name: dkemko1lp
     api_key: 221453993611229
     multiple: true
+    max_files: 100
+    # default_transformations: # makes f_auto and q_auto for all inserted
+    #   - quality: auto
+    #     fetch_format: auto
     # not sure how to get below to work yet but they're related to making the cloudinary widget more seamless
     # inline-container: "body"
     # remove_header: true
 
+# Each collection can have extension and format options
+# For example, you could set both to json to have new entries in the collection save as .json files instead of .md
+# However, then you'd have to change your source plugin to be able to query the json files instead of MarkdownRemark
+# Specifically, there's a source plugin called gatsby-transformer-json ! Try it out maybe!
 collections:
   - name: "pages"
     label: "Pages"
