@@ -7,6 +7,9 @@ const { forEach } = require('lodash')
 const { node } = require('prop-types')
 
 function getPublicIdFromURL(url, cloudinaryFolder) {
+  if (typeof url !== "string") {
+    console.log(`ERROR: ${url} is a ${typeof url}, not a string`);
+  }
   const cloudinaryFolderIndex = url.indexOf(cloudinaryFolder)
   const extensionRegex = /\.(?:jpg|jpeg|webp|gif|png|bmp|tiff|svg)$/gmi
   const imageExtensionIndex = url.search(extensionRegex)

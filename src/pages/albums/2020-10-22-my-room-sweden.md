@@ -3,8 +3,7 @@ templateKey: album-post
 title: My Room Sweden
 date: 2020-10-22T01:44:28.478Z
 description: The room i had in sweden
-featuredimage:
-  - https://res.cloudinary.com/dkemko1lp/image/upload/f_auto,q_auto/v1603256285/room/DSC_0042_oaaap5.jpg
+featuredimage: https://res.cloudinary.com/dkemko1lp/image/upload/f_auto,q_auto/v1603256285/room/DSC_0042_oaaap5.jpg
 location: '{"type":"Point","coordinates":[13.1951474,55.717742]}'
 photos:
   - https://res.cloudinary.com/dkemko1lp/image/upload/f_auto,q_auto/v1603256285/room/DSC_0042_oaaap5.jpg

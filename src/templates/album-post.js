@@ -6,8 +6,6 @@ import { graphql, Link } from 'gatsby'
 import Layout from '../components/Layout'
 
 const AlbumImages = ({photos}) => {
-  console.log(photos);
-
   return (
     photos.map((photo) => (
       <div
