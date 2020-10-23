@@ -29,10 +29,14 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     })
     let featuredimage_publicid = null
     let photos_publicids = null
+    let image_publicid = null
+    const cloudinaryFolder = siteMetadata.cloudinary_folder
     if (node.frontmatter.templateKey === `album-post`) {
-      const cloudinaryFolder = siteMetadata.cloudinary_folder
       featuredimage_publicid = getPublicIdFromURL(node.frontmatter.featuredimage, cloudinaryFolder)
       photos_publicids = node.frontmatter.photos.map(photo => getPublicIdFromURL(photo, cloudinaryFolder))
+    }
+    if (node.frontmatter.templateKey === `index-page`) {
+      image_publicid = getPublicIdFromURL(node.frontmatter.image, cloudinaryFolder)
     }
     createNodeField({
       name: `featuredimage_publicid`,
@@ -43,6 +47,11 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       name: `photos_publicids`,
       node,
       value: photos_publicids, // THIS HAS TO BE CALLED VALUE BECAUSE IT GETS DESTRUCTURED AS SUCH!
+    })
+    createNodeField({
+      name: `image_publicid`,
+      node,
+      value: image_publicid,
     })
   }
 }
@@ -58,6 +67,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       slug: String!
       featuredimage_publicid: String
       photos_publicids: [String]
+      image_publicid: String
     }
     type Frontmatter {
       featuredimage: String
@@ -80,6 +90,7 @@ exports.createPages = ({ actions, graphql }) => {
             fields {
               slug
               photos_publicids
+              image_publicid
             }
             frontmatter {
               tags
@@ -98,8 +109,6 @@ exports.createPages = ({ actions, graphql }) => {
     const posts = result.data.allMarkdownRemark.edges
 
     posts.forEach((edge) => {
-      const id = edge.node.id
-      // create if structure for templateKey - or do it down in context with a ? : thing (maybe)
       createPage({
         path: edge.node.fields.slug,
         tags: edge.node.frontmatter.tags,
@@ -107,8 +116,9 @@ exports.createPages = ({ actions, graphql }) => {
           `src/templates/${String(edge.node.frontmatter.templateKey)}.js`
         ),
         context: {
-          id,
+          id: edge.node.id,
           photos_publicids: edge.node.fields.photos_publicids,
+          image_publicid: edge.node.fields.image_publicid,
         },
       })
     })

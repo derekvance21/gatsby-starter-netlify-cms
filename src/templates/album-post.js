@@ -39,9 +39,7 @@ export const AlbumPostTemplate = ({
             </h1>
             <p>{description}</p>
             {photos ? 
-              <AlbumImages
-                photos={photos}
-              />
+              <AlbumImages photos={photos} />
               :
               null
             }

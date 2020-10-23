@@ -4,11 +4,27 @@ import { graphql } from 'gatsby'
 
 import Layout from '../components/Layout'
 
+const PhotoImages = ({photos}) => {
+  return (
+    photos.map((photo) => (
+      <div
+        className="album-image margin-top-0"
+        style={{
+          backgroundImage: `url(${photo.node.secure_url})`,
+          width: '100%',
+          paddingTop: `${100 * photo.node.height / photo.node.width}%`, // container-width * height / width
+          marginBottom: `4%`,
+        }}
+      ></div>
+    ))
+  )
+}
+
 export const IndexPageTemplate = ({
   image,
   title,
-  heading,
   subheading,
+  photos
 }) => (
   <div>
     <div
@@ -16,9 +32,11 @@ export const IndexPageTemplate = ({
       style={{
         backgroundImage: `url(${
           // !!image.childImageSharp ? image.childImageSharp.fluid.src : 
-          image
+          image.secure_url
         })`,
-        backgroundPosition: `top left`,
+        paddingTop: `${50 * image.height / image.width}%`,
+        paddingBottom: `${50 * image.height / image.width}%`,
+        // backgroundPosition: `top left`,
         backgroundAttachment: `fixed`,
       }}
     >
@@ -62,13 +80,13 @@ export const IndexPageTemplate = ({
     </div>
     <section className="section section--gradient">
       <div className="container">
-        <div className="section">
-          <div className="columns">
-            <div className="column is-10 is-offset-1">
-              
-              photos will go here
-
-            </div>
+        <div className="columns">
+          <div className="column is-10 is-offset-1">
+          {photos ?
+            <PhotoImages photos={photos} />
+            :
+            null
+          }
           </div>
         </div>
       </div>
@@ -78,22 +96,24 @@ export const IndexPageTemplate = ({
 
 IndexPageTemplate.propTypes = {
   // image: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  image: PropTypes.string,
+  image: PropTypes.object,
   title: PropTypes.string,
   heading: PropTypes.string,
   subheading: PropTypes.string,
+  photos: PropTypes.array,
 }
 
 const IndexPage = ({ data }) => {
-  const { frontmatter } = data.markdownRemark
+  const { markdownRemark: {frontmatter}, cloudinaryMedia, allCloudinaryMedia: {edges: photos} } = data
 
   return (
     <Layout>
       <IndexPageTemplate
-        image={frontmatter.image}
+        image={cloudinaryMedia}
         title={frontmatter.title}
         heading={frontmatter.heading}
         subheading={frontmatter.subheading}
+        photos={photos}
       />
     </Layout>
   )
@@ -103,6 +123,8 @@ IndexPage.propTypes = {
   data: PropTypes.shape({
     markdownRemark: PropTypes.shape({
       frontmatter: PropTypes.object,
+      cloudinaryMedia: PropTypes.object,
+      photos: PropTypes.array,
     }),
   }),
 }
@@ -110,14 +132,27 @@ IndexPage.propTypes = {
 export default IndexPage
 
 export const pageQuery = graphql`
-  query IndexPageTemplate {
+  query IndexPageTemplate( $image_publicid: String ) {
     markdownRemark(frontmatter: { templateKey: { eq: "index-page" } }) {
       frontmatter {
         title
         image
-        heading
         subheading
       }
+    }
+    allCloudinaryMedia (sort: {fields: id}) { 
+      edges {
+        node {
+          secure_url
+          width
+          height
+        }
+      }
+    }
+    cloudinaryMedia(public_id: { eq: $image_publicid } ) {
+      secure_url
+      width
+      height
     }
   }
 `

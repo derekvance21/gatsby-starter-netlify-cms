@@ -46,26 +46,24 @@ const Footer = class extends React.Component {
                         About
                       </Link>
                     </li>
+                  </ul>
+                </section>
+              </div>
+              <div className="column is-4">
+                <section className="menu">
+                  <ul className="menu-list">
+                    <li>
+                      <Link className="navbar-item" to="/contact">
+                        Contact
+                      </Link>
+                    </li>
                     <li>
                       <a
                         className="navbar-item"
                         href="/admin/"
                         target="_blank"
                         rel="noopener noreferrer"
-                      >
-                        Admin
-                      </a>
-                    </li>
-                  </ul>
-                </section>
-              </div>
-              <div className="column is-4">
-                <section>
-                  <ul className="menu-list">
-                    <li>
-                      <Link className="navbar-item" to="/contact">
-                        Contact
-                      </Link>
+                      >Admin</a>
                     </li>
                   </ul>
                 </section>
