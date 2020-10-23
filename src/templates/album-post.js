@@ -79,7 +79,6 @@ const AlbumPost = ({ data }) => {
     } 
   } = data
 
-
   return (
     <Layout>
       <AlbumPostTemplate
@@ -111,7 +110,7 @@ AlbumPost.propTypes = {
 export default AlbumPost
 
 export const pageQuery = graphql`
-  query AlbumPostByID($id: String!, $photos_publicid: [String]) {
+  query AlbumPostByID($id: String!, $photos_publicids: [String]) {
     markdownRemark(id: { eq: $id }) {
       id
       frontmatter {
@@ -122,7 +121,7 @@ export const pageQuery = graphql`
         photos
       }
     }
-    allCloudinaryMedia(filter: {public_id: { in: $photos_publicid }}) {
+    allCloudinaryMedia(filter: {public_id: { in: $photos_publicids }}) {
       edges {
         node {
           height
