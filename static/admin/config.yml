@@ -15,7 +15,6 @@ public_folder: /img
 
 media_library:
   name: cloudinary
-  output_filename_only: true
   config:
     cloud_name: dkemko1lp
     api_key: 221453993611229
