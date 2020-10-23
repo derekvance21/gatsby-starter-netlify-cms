@@ -41,7 +41,7 @@ export default function AlbumRoll() {
                   <div className="featured-thumbnail">
                     <PreviewCompatibleImage
                       imageInfo={{
-                        image: album.frontmatter.featuredimage,
+                        image: album.frontmatter.featuredimage[0],
                         alt: `featured image thumbnail for album ${album.frontmatter.title}`,
                       }}
                     />

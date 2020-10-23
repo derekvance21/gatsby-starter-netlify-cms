@@ -9,6 +9,7 @@ const { node } = require('prop-types')
 function getPublicIdFromURL(url, cloudinaryFolder) {
   if (typeof url !== "string") {
     console.log(`ERROR: ${url} is a ${typeof url}, not a string`);
+    return null
   }
   const cloudinaryFolderIndex = url.indexOf(cloudinaryFolder)
   const extensionRegex = /\.(?:jpg|jpeg|webp|gif|png|bmp|tiff|svg)$/gmi
@@ -32,7 +33,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     let image_publicid = null
     const cloudinaryFolder = siteMetadata.cloudinary_folder
     if (node.frontmatter.templateKey === `album-post`) {
-      featuredimage_publicid = getPublicIdFromURL(node.frontmatter.featuredimage, cloudinaryFolder)
+      featuredimage_publicid = getPublicIdFromURL(node.frontmatter.featuredimage[0], cloudinaryFolder)
       photos_publicids = node.frontmatter.photos.map(photo => getPublicIdFromURL(photo, cloudinaryFolder))
     }
     if (node.frontmatter.templateKey === `index-page`) {
@@ -70,7 +71,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       image_publicid: String
     }
     type Frontmatter {
-      featuredimage: String
+      featuredimage: [String]
       image: String
       photos: [String]
     }

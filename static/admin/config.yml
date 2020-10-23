@@ -62,7 +62,8 @@ collections:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Publish Date", name: "date", widget: "datetime"}
       - {label: "Description", name: "description", widget: "text"}
-      - {label: "Featured Image", name: "featuredimage", widget: "image", allow_multiple: false}
+      # allow_multiple doesn't seem to be supported by cloudinary!
+      - {label: "Featured Image", name: "featuredimage", widget: "image", allow_multiple: false} 
       - {label: "Location", name: "location", widget: "map", required: false}
       - label: "Photos"
         name: "photos"
